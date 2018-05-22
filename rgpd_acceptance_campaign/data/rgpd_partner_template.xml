@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright Xavier Jiménez <xavier.jimenez@qubiq.es>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+	<data>
+
+        <!-- Mail template -->
+        <record id="rgpd_acceptance_request_email_template" model="email.template">
+            <field name="name">RGPD Acceptance Request</field>
+            <field name="email_from">${user.company_id.email or '' | safe}</field>
+            <field name="subject">${user.company_id.name}: Petición de Aceptación RGPD</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="partner_to">${object.id}</field>
+            <field name="body_html">
+                <![CDATA[
+                    <div style="background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;">
+                        % set access_token = object.partner_get_access_token()
+                        <table style="width:600px;margin:5px auto;">
+                            <tbody>
+                                <tr><td>
+                                    <a href="/"><img src="/web/binary/company_logo" style="vertical-align:baseline;max-width:100px;" /></a>
+                                </td><td style="text-align:right;vertical-align:middle;">
+                                        Aceptación RGPD
+                                </td></tr>
+                            </tbody>
+                        </table>
+                        <table style="width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;">
+                            <tbody>
+                                <tr><td style="padding:15px 20px 10px 20px;">
+                                    <p>Hola,</p>
+                                    <p>Seguramente habrás escuchado hablar del nuevo <strong>Reglamento General de Protección de Datos (RGPD)</strong>, el cual empezará a tener efecto el próximo 25 de mayo de 2018. Para ayudar a cumplir con los requisitos de consentimiento del RGPD, necesitamos que confirmes que te gustaría seguir recibiendo nuestras newsletters.</p>
+                                </td></tr>
+                                <tr><td style="padding:10px 20px">
+                                    <table summary="o_mail_notification" style="width:100%;border-top:1px solid #e1e1e1;">
+                                        <tr>
+                                            <td style="padding:10px 10px;">
+                                                <table style="width:100%;text-align:center;">
+                                                    <tr align="center">
+                                                        <td>
+                                                            <a href="/rgpd/${access_token}/yes" class="button" style="color: white; font-size: 16px; display: inline-block; text-align: center; vertical-align: middle; padding: 16px 50px; background: #9999c3; border: 0px solid black; text-shadow: none; box-shadow: none">
+                                                                Acepto
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/rgpd/${access_token}/no" class="button" style="color: white; font-size: 16px; display: inline-block; text-align: center; vertical-align: middle; padding: 16px 40px; background: #9999c3; border: 0px solid black; text-shadow: none; box-shadow: none">
+                                                                No acepto
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td></tr>
+                            </tbody>
+                        </table>
+                        <table style="width:600px;margin:auto;text-align:center;font-size:12px;">
+                            <tbody>
+                                <tr><td style="padding-top:10px;color:#afafaf;">
+                                    <p>
+                                        Envío generado por ${user.company_id.name}.
+                                    </p>
+                                </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                ]]>
+            </field>
+        </record>
+
+        <!-- Action to send multiple mails at once (must be added in 'More' menu) -->
+        <record id="action_run_rgpd_email_campaign" model="ir.actions.server">
+            <field name="name">RGPD Email Campaign</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">email</field>
+            <field name="template_id" ref="rgpd_acceptance_campaign.rgpd_acceptance_request_email_template"/>
+        </record>
+
+	</data>
+</openerp>

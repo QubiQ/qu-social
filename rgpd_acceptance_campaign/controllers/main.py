@@ -5,6 +5,7 @@
 from openerp import http
 from openerp.http import request
 
+from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -24,7 +25,8 @@ class RGPDAcceptanceResponse(http.Controller):
             'response': response,
         })
         response_obj.partner_id.write({
-            'accepted_rgpd': response,
+            'response_rgpd': response,
+            'date_response': datetime.utcnow().strftime("%d/%m/%Y %H:%M:%S"),
         })
         return request.render(
             'rgpd_acceptance_campaign.rgpd_response_confirmation_template')

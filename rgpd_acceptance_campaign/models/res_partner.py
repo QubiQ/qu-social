@@ -8,10 +8,15 @@ from openerp import models, fields, api
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    accepted_rgpd = fields.Selection([
+    response_rgpd = fields.Selection([
         ('yes', 'Sí'),
         ('no', 'No',)],
-        string="Accepted RGPD",
+        string="RGPD Response",
+        readonly=True,
+    )
+    date_response = fields.Char(
+        string="Response date",
+        readonly=True,
     )
 
     def partner_get_access_token(self):

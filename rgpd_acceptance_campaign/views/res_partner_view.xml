@@ -13,7 +13,8 @@
 				<xpath expr="//page[@name='internal_notes']" position="after">
 					<page string="RGPD Information">
 						<group string="RGPD Information">
-							<field name="accepted_rgpd"/>
+							<field name="response_rgpd"/>
+							<field name="date_response"/>
 						</group>
 					</page>
 				</xpath>

@@ -4,7 +4,7 @@
 
 {
     'name': 'RGPD Acceptance Campaign',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'summary': 'RGPD Acceptance Campaign',
     'category': 'Mailing',
     "website": "https://www.qubiq.es",
